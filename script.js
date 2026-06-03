@@ -180,7 +180,7 @@ window.onload = () => {
         <div style="text-align: center; background: rgba(0,0,0,0.3); border-radius: 2rem; padding: 2rem; margin-top:1rem;">
             <i class="fas fa-search" style="font-size: 3rem; color: #3980b3;"></i>
             <p style="color:#bbdef5; margin-top:12px;">Enter your Roll Number above to view attendance & activity status</p>
-            <p style="font-size:0.8rem; color:#6c9bc2;">Quiz / Assignment / Presentation statuses — no marks displayed</p>
+            <p style="font-size:0.8rem; color:#6c9bc2;">Quiz / Assignment / Presentation statuses — </p>
         </div>
     `;
 };
