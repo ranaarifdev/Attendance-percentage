@@ -1,6 +1,6 @@
-// ======================= STUDENT DATA (Converted from excel sheets into JS objects) =======================
+// ======================= STUDENT DATA =======================
 // Based on provided attendance sheets + assignments/presentation statuses
-// No marks or grades displayed, only submission status (Submitted/Not Submitted, Given/Not Given)
+// No marks or grades displayed, only submission status
 
 const studentsData = [
     { rollNo: "ECTE231122101", name: "Muhammad Shahzaib", attendancePercent: 48.48, quizzes: { q1: false, q2: false, q3: false }, assignments: { a1: true, a2: false, a3: false }, presentation: false },
@@ -8,7 +8,7 @@ const studentsData = [
     { rollNo: "ECTE231122103", name: "Romaisa Khan", attendancePercent: 67.74, quizzes: { q1: false, q2: false, q3: false }, assignments: { a1: true, a2: true, a3: false }, presentation: true },
     { rollNo: "ECTE231122104", name: "Javed Iqbal", attendancePercent: 19.35, quizzes: { q1: false, q2: false, q3: false }, assignments: { a1: false, a2: false, a3: false }, presentation: false },
     { rollNo: "ECTE231122106", name: "Muhammad Sanawar Ali", attendancePercent: 48.39, quizzes: { q1: false, q2: true, q3: false }, assignments: { a1: true, a2: false, a3: false }, presentation: false },
-    { rollNo: "ECTE231122107", name: "Hira Zafar", attendancePercent: 70.42, quizzes: { q1: true, q2: true, q3: true }, assignments: { a1: true, a2: true, a3: false }, presentation: true },
+    { rollNo: "ECTE231122107", name: "Hira Zafar", attendancePercent: 77.42, quizzes: { q1: true, q2: true, q3: true }, assignments: { a1: true, a2: true, a3: false }, presentation: true },
     { rollNo: "ECTE231122110", name: "Khansa Aamir", attendancePercent: 64.52, quizzes: { q1: true, q2: true, q3: false }, assignments: { a1: true, a2: true, a3: false }, presentation: false },
     { rollNo: "ECTE231122111", name: "Eman Razaq", attendancePercent: 67.74, quizzes: { q1: true, q2: true, q3: false }, assignments: { a1: true, a2: true, a3: false }, presentation: false },
     { rollNo: "ECTE231122112", name: "Muhammad Basit", attendancePercent: 96.77, quizzes: { q1: true, q2: true, q3: true }, assignments: { a1: true, a2: true, a3: false }, presentation: false },
@@ -56,9 +56,16 @@ function getStudentByRoll(roll) {
 // Render dynamic dashboard
 function renderStudentDashboard(student) {
     if (!student) return;
+
     const attPercent = student.attendancePercent;
     const roundedPercent = Math.round(attPercent);
     const progressWidth = Math.min(100, Math.max(0, attPercent));
+
+    // Determine attendance color class
+    let attColorClass = '';
+    if (attPercent >= 75) attColorClass = 'att-good';
+    else if (attPercent >= 50) attColorClass = 'att-warning';
+    else attColorClass = 'att-danger';
 
     // Quizzes mapping
     const quizItems = [
@@ -76,32 +83,36 @@ function renderStudentDashboard(student) {
     const html = `
         <div class="profile-card">
             <div class="student-name-row">
-                <div class="student-name"><i class="fas fa-user-graduate"></i> ${student.name}</div>
+                <div class="student-name">
+                    <span class="name-icon"><i class="fas fa-user-graduate"></i></span>
+                    <span>${student.name}</span>
+                </div>
                 <div class="roll-badge"><i class="fas fa-qrcode"></i> ${student.rollNo}</div>
             </div>
             
             <!-- Attendance section -->
             <div class="attendance-block">
-                <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                    <span style="font-weight: 500; color: #cbebff;"><i class="fas fa-calendar-check"></i> Attendance Percentage</span>
+                <div class="att-header">
+                    <span class="att-title"><i class="fas fa-calendar-check"></i> Attendance Percentage</span>
                     <span class="att-percent">${roundedPercent}%</span>
                 </div>
                 <div class="progress-bar-bg">
-                    <div class="progress-fill" style="width: ${progressWidth}%;"></div>
+                    <div class="progress-fill" style="width: 0%;"></div>
                 </div>
-                <div style="font-size: 0.75rem; margin-top: 8px; color:#93b7d4;">Total lectures tracked: based on university records</div>
+                <div class="att-footer"><i class="fas fa-info-circle"></i> Total lectures tracked based on university records</div>
             </div>
             
             <!-- Quizzes & Assignments + Presentation Grid -->
             <div class="stats-grid">
                 <!-- QUIZ CARD -->
                 <div class="status-card">
-                    <div class="card-title"><i class="fas fa-pen-alt"></i> Quizzes Status</div>
+                    <div class="card-title"><span class="card-icon"><i class="fas fa-pen-alt"></i></span> Quizzes</div>
                     ${quizItems.map(q => `
                         <div class="status-item">
                             <span class="status-label">${q.label}</span>
                             <span class="status-badge ${q.status ? 'submitted' : 'not-submitted'}">
-                                ${q.status ? '<i class="fas fa-check-circle"></i> Submitted' : '<i class="fas fa-times-circle"></i> Not Submitted'}
+                                <i class="fas ${q.status ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                                ${q.status ? 'Submitted' : 'Missing'}
                             </span>
                         </div>
                     `).join('')}
@@ -109,12 +120,13 @@ function renderStudentDashboard(student) {
                 
                 <!-- ASSIGNMENT CARD -->
                 <div class="status-card">
-                    <div class="card-title"><i class="fas fa-tasks"></i> Assignments Status</div>
+                    <div class="card-title"><span class="card-icon"><i class="fas fa-tasks"></i></span> Assignments</div>
                     ${assignmentItems.map(a => `
                         <div class="status-item">
                             <span class="status-label">${a.label}</span>
                             <span class="status-badge ${a.status ? 'submitted' : 'not-submitted'}">
-                                ${a.status ? '<i class="fas fa-check-circle"></i> Submitted' : '<i class="fas fa-times-circle"></i> Not Submitted'}
+                                <i class="fas ${a.status ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                                ${a.status ? 'Submitted' : 'Missing'}
                             </span>
                         </div>
                     `).join('')}
@@ -122,19 +134,32 @@ function renderStudentDashboard(student) {
                 
                 <!-- PRESENTATION CARD -->
                 <div class="status-card">
-                    <div class="card-title"><i class="fas fa-chalkboard"></i> Presentation</div>
+                    <div class="card-title"><span class="card-icon"><i class="fas fa-chalkboard"></i></span> Presentation</div>
                     <div class="presentation-solo">
                         <span class="status-label">Final Presentation</span>
-                        <span class="status-badge ${presentationGiven ? 'submitted' : 'not-submitted'}" style="font-size:1rem;">
-                            ${presentationGiven ? '<i class="fas fa-check-circle"></i> Given' : '<i class="fas fa-times-circle"></i> Not Given'}
+                        <span class="status-badge ${presentationGiven ? 'submitted' : 'not-submitted'}">
+                            <i class="fas ${presentationGiven ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                            ${presentationGiven ? 'Presented' : 'Not Presented'}
                         </span>
                     </div>
-                    <div style="margin-top: 12px; font-size:0.7rem; color:#98b8d4;"><i class="fas fa-info-circle"></i> Status based on submission</div>
+                    <div class="info-text"><i class="fas fa-info-circle"></i> Status based on submission records</div>
                 </div>
             </div>
         </div>
     `;
-    document.getElementById("resultContainer").innerHTML = html;
+
+    const container = document.getElementById("resultContainer");
+    container.innerHTML = html;
+
+    // Animate progress bar after a short delay
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            const progressBar = container.querySelector('.progress-fill');
+            if (progressBar) {
+                progressBar.style.width = `${progressWidth}%`;
+            }
+        }, 100);
+    });
 }
 
 // Show error message
@@ -143,12 +168,16 @@ function showError(message) {
     const errorSpan = document.getElementById("errorText");
     errorSpan.innerText = message || "Student not found! Please check roll number.";
     errorDiv.style.display = "flex";
-    setTimeout(() => {
-        if (errorDiv.style.display === "flex") errorDiv.style.display = "none";
-    }, 3500);
+
+    // Auto-hide after 4 seconds
+    clearTimeout(window._errorTimeout);
+    window._errorTimeout = setTimeout(() => {
+        errorDiv.style.display = "none";
+    }, 4000);
 }
 
 function hideError() {
+    clearTimeout(window._errorTimeout);
     document.getElementById("errorMsg").style.display = "none";
 }
 
@@ -175,12 +204,12 @@ document.getElementById("rollInput").addEventListener("keypress", (e) => {
 });
 
 // Initial welcome message
-window.onload = () => {
+window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("resultContainer").innerHTML = `
-        <div style="text-align: center; background: rgba(0,0,0,0.3); border-radius: 2rem; padding: 2rem; margin-top:1rem;">
-            <i class="fas fa-search" style="font-size: 3rem; color: #3980b3;"></i>
-            <p style="color:#bbdef5; margin-top:12px;">Enter your Roll Number above to view attendance & activity status</p>
-            <p style="font-size:0.8rem; color:#6c9bc2;">Quiz / Assignment / Presentation statuses — </p>
+        <div class="welcome-state">
+            <div class="welcome-icon"><i class="fas fa-fingerprint"></i></div>
+            <h3 class="welcome-title">Enter your Roll Number above</h3>
+            <p class="welcome-sub">View your attendance & activity status instantly</p>
         </div>
     `;
-};
+});
