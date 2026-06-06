@@ -16,7 +16,7 @@ const studentsData = [
     { rollNo: "ECTE231122118", name: "Allah Nawaz", attendancePercent: 41.94, quizzes: { q1: true, q2: true, q3: false }, assignments: { a1: true, a2: true, a3: false }, presentation: false },
     { rollNo: "ECTE231122119", name: "Muhammad Talha Zafar", attendancePercent: 96.77, quizzes: { q1: true, q2: true, q3: true }, assignments: { a1: true, a2: true, a3: false }, presentation: true },
     { rollNo: "ECTE231122120", name: "Ghulam Hussain", attendancePercent: 32.26, quizzes: { q1: false, q2: false, q3: false }, assignments: { a1: false, a2: false, a3: false }, presentation: false },
-    { rollNo: "ECTE231122121", name: "Muhammad Zahid", attendancePercent: 87.10, quizzes: { q1: true, q2: false, q3: true }, assignments: { a1: true, a2: true, a3: false }, presentation: false },
+    { rollNo: "ECTE231122121", name: "Muhammad Zahid", attendancePercent: 87.10, quizzes: { q1: true, q2: true, q3: true }, assignments: { a1: true, a2: true, a3: false }, presentation: false },
     { rollNo: "ECTE231122122", name: "Muhammad Rayyan", attendancePercent: 48.39, quizzes: { q1: false, q2: false, q3: false }, assignments: { a1: true, a2: true, a3: false }, presentation: false },
     { rollNo: "ECTE231122123", name: "Muhammad Saad Habib", attendancePercent: 25.81, quizzes: { q1: false, q2: false, q3: false }, assignments: { a1: false, a2: false, a3: false }, presentation: false },
     { rollNo: "ECTE231122124", name: "Muhammad Imran", attendancePercent: 74.19, quizzes: { q1: true, q2: true, q3: true }, assignments: { a1: true, a2: true, a3: false }, presentation: false },
