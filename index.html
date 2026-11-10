@@ -1,1 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Check BS Cyber Security 7th Semester attendance at Emerson University Multan.">
+  <meta name="theme-color" content="#10263a">
+  <title>Cyber Security Attendance Portal | Emerson University Multan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#home" aria-label="Emerson University Multan attendance portal home">
+        <span class="brand-mark" aria-hidden="true">EU</span>
+        <span class="brand-copy">
+          <span class="university-name">Emerson University Multan</span>
+          <span class="department-name">Department of Cyber Security</span>
+          <span class="portal-name">Cyber Security Attendance Portal</span>
+        </span>
+      </a>
+      <div class="header-meta" aria-label="Academic information">
+        <span class="header-badge">7th Semester</span>
+        <span class="header-session">Session 2023–2027</span>
+        <span class="header-section">Evening <span aria-hidden="true">·</span> Section A</span>
+      </div>
+      <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <span aria-hidden="true">☾</span><span class="theme-toggle-label">Dark mode</span>
+      </button>
+    </div>
+  </header>
 
+  <main id="home" class="page-shell">
+    <!-- Student Portal View (Default) -->
+    <div id="studentPortalView">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-copy">
+          <p class="hero-university">EMERSON UNIVERSITY MULTAN</p>
+          <p class="eyebrow">BS Cyber Security <span aria-hidden="true">·</span> Evening <span aria-hidden="true">·</span> Section A</p>
+          <h1 id="heroTitle">Check Your Attendance</h1>
+          <p>Enter your university roll number or SAP ID to view your attendance across all five subjects.</p>
+        </div>
+        <div class="hero-mark" aria-hidden="true"><span>EU</span><i></i><i></i><i></i></div>
+      </section>
+
+      <section class="search-panel" aria-labelledby="searchTitle">
+        <div class="section-heading">
+          <span class="heading-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+          </span>
+          <div><h2 id="searchTitle">Student lookup</h2><p>Your attendance is shown only after you search.</p></div>
+        </div>
+        <form id="searchForm" novalidate>
+          <label for="studentId">University roll number or SAP ID</label>
+          <div class="search-row">
+            <div class="input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+              <input id="studentId" name="studentId" type="search" placeholder="Enter University Roll Number or SAP ID" autocomplete="off" aria-describedby="searchHelp" required>
+            </div>
+            <button id="clearButton" class="button button-secondary clear-button" type="button" disabled>Clear</button>
+            <button id="searchButton" class="button button-primary" type="submit">
+              <span class="button-spinner" aria-hidden="true"></span>
+              <span>View Attendance</span>
+            </button>
+          </div>
+          <p id="searchHelp" class="field-help">Example: ECTE231122101 or 3400003182</p>
+        </form>
+
+        <div id="errorMessage" class="error-message" role="alert" hidden></div>
+      </section>
+
+      <section id="resultContainer" aria-live="polite"></section>
+
+      <section class="subjects-reference" aria-labelledby="subjectsTitle">
+        <div class="subjects-heading">
+          <div><p class="eyebrow">Your semester at a glance</p><h2 id="subjectsTitle">7th Semester Subjects</h2></div>
+          <span>5 subjects</span>
+        </div>
+        <div id="subjectList" class="subject-list"></div>
+      </section>
+    </div>
+
+    <!-- Admin Login View -->
+    <div id="adminLoginView" class="admin-view" hidden>
+      <div class="admin-login-card">
+        <div class="admin-login-header">
+          <span class="admin-brand-mark" aria-hidden="true">EU</span>
+          <p class="eyebrow">Emerson University Multan</p>
+          <h2>Faculty & Staff Portal</h2>
+          <p class="admin-login-subtitle">Sign in to access the full 7th Semester attendance rosters and generate subject reports.</p>
+        </div>
+        <form id="adminLoginForm" novalidate>
+          <div class="admin-form-group">
+            <label for="adminUsername">Username</label>
+            <div class="input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <input id="adminUsername" name="adminUsername" type="text" placeholder="Enter username (arif2743)" autocomplete="username" required>
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label for="adminPassword">Password</label>
+            <div class="input-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <input id="adminPassword" name="adminPassword" type="password" placeholder="Enter password" autocomplete="current-password" required>
+            </div>
+          </div>
+          <div id="adminLoginError" class="error-message" role="alert" hidden></div>
+          <div class="admin-login-actions">
+            <button id="adminLoginBtn" class="button button-primary admin-submit-btn" type="submit">Sign In to Dashboard</button>
+            <button id="backToStudentBtn" class="button button-secondary" type="button">← Return to Student Portal</button>
+          </div>
+        </form>
+        <div class="admin-security-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <p><strong>Notice:</strong> This is a client-side authenticated administrative interface for static GitHub Pages hosting. Production systems require a server-protected backend.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard View -->
+    <div id="adminDashboardView" class="admin-view" hidden>
+      <!-- Admin Topbar -->
+      <div class="admin-topbar">
+        <div class="admin-topbar-info">
+          <span class="admin-badge">Faculty Administration</span>
+          <h2>Semester Attendance Roster</h2>
+          <p>BS Cyber Security · 7th Semester · Evening Section A (Session 2023–2027)</p>
+        </div>
+        <div class="admin-topbar-actions">
+          <span class="admin-user-pill">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            arif2743
+          </span>
+          <button id="adminToStudentBtn" class="button button-secondary" type="button">Student Portal</button>
+          <button id="adminLogoutBtn" class="button button-outline logout-btn" type="button">Log Out</button>
+        </div>
+      </div>
+
+      <!-- Workbook Status & Management Card -->
+      <div class="admin-workbook-card">
+        <div class="workbook-info">
+          <span id="statusIndicator" class="status-indicator" aria-hidden="true"></span>
+          <div>
+            <p id="dataStatus" role="status" aria-live="polite">Loading attendance workbook…</p>
+            <p id="workbookSummary" class="workbook-summary">Waiting for workbook details.</p>
+          </div>
+        </div>
+        <div class="workbook-actions">
+          <button id="refreshButton" class="button button-outline" type="button">Refresh Workbook</button>
+          <label class="button button-outline upload-button" for="workbookUpload">Choose Workbook</label>
+          <input id="workbookUpload" type="file" accept=".xlsx,.xls" hidden>
+        </div>
+      </div>
+      <p id="lastUpdated" class="last-updated">Last successful refresh: not available</p>
+
+      <!-- Subject Tabs -->
+      <div class="admin-subjects-section">
+        <div class="admin-section-header">
+          <div>
+            <p class="eyebrow">Subject Filter</p>
+            <h3>Select a Subject to View Full Attendance</h3>
+          </div>
+          <span class="badge-count">5 Subjects</span>
+        </div>
+        <div id="adminSubjectTabs" class="admin-subject-tabs" role="tablist">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Active Subject Roster Card -->
+      <section id="adminRosterSection" class="admin-roster-section" aria-labelledby="activeSubjectTitle">
+        <!-- Printable Header (Screen Hidden, Print Visible) -->
+        <div class="admin-print-header">
+          <div class="print-header-top">
+            <div class="print-emerson-mark">EU</div>
+            <div>
+              <h2>EMERSON UNIVERSITY MULTAN</h2>
+              <p>Department of Cyber Security — BS Cyber Security 7th Semester</p>
+              <p>Session 2023–2027 · Evening · Section A</p>
+            </div>
+          </div>
+          <div class="print-subject-meta">
+            <h3 id="printSubjectName">Subject</h3>
+            <p id="printTeacherName">Teacher</p>
+            <p id="printGeneratedDate">Generated on</p>
+          </div>
+        </div>
+
+        <!-- Dashboard Subject Card Header (Screen Visible) -->
+        <div class="admin-roster-header">
+          <div class="admin-roster-title">
+            <span id="adminSubjectIcon" class="subject-icon" aria-hidden="true"></span>
+            <div>
+              <h3 id="activeSubjectTitle">Subject Name</h3>
+              <p id="activeSubjectTeacher">Teacher: </p>
+            </div>
+          </div>
+          <div class="admin-roster-controls">
+            <div class="admin-search-wrap">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+              <input id="adminRosterSearch" type="search" placeholder="Search by roll number or name..." aria-label="Filter student list">
+            </div>
+            <button id="printSubjectAttendanceBtn" class="button button-primary" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              <span>Print Attendance List</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Subject Metrics Summary -->
+        <div class="admin-metrics-grid" id="adminSubjectMetrics">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Attendance Table -->
+        <div class="admin-table-container">
+          <table class="admin-table" id="adminAttendanceTable">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 50px;">Sr. #</th>
+                <th scope="col" style="width: 130px;">Roll Number</th>
+                <th scope="col" style="width: 110px;">SAP ID</th>
+                <th scope="col">Student Name</th>
+                <th scope="col" style="width: 140px;">Exam Eligibility</th>
+                <th scope="col" class="num-col" style="width: 110px;">Total (AJ)</th>
+                <th scope="col" class="num-col" style="width: 130px;">Percentage (AK)</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              <!-- Rows populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Print Footer Signature Area (Print only) -->
+        <div class="admin-print-footer">
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <p>Subject Teacher Signature</p>
+          </div>
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <p>Incharge Attendance</p>
+          </div>
+          <div class="sig-block">
+            <div class="sig-line"></div>
+            <p>Head of Department</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-mark" aria-hidden="true">EU</span>
+      <div class="footer-meta-block">
+        <p>Emerson University Multan <span>·</span> Department of Cyber Security</p>
+        <p>BS Cyber Security <span>·</span> 7th Semester <span>·</span> 2023–2027</p>
+      </div>
+      <div class="footer-end-block">
+        <small>© 2024 Emerson University Multan</small>
+        <a href="#admin" id="footerAdminLink" class="footer-admin-link">Staff Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
